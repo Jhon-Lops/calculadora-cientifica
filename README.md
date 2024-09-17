@@ -1,40 +1,90 @@
-# Calculadora Científica
+from tkinter import *
+import math
+import numpy as np
+import matplotlib.pyplot as plt
 
-Esta é uma calculadora científica com funcionalidade de plotar gráficos no plano cartesiano.
+# Função para calcular a expressão
+def calcular():
+    try:
+        resultado = eval(entrada.get())
+        entrada.delete(0, END)
+        entrada.insert(END, str(resultado))
+    except Exception as e:
+        entrada.delete(0, END)
+        entrada.insert(END, "Erro")
 
-## Funcionalidades
+# Função para inserir valores na entrada
+def inserir_valor(valor):
+    entrada.insert(END, valor)
 
-- Operações matemáticas básicas (adição, subtração, multiplicação, divisão)
-- Funções trigonométricas (seno, cosseno, tangente)
-- Funções logarítmicas e exponenciais
-- Plotagem de gráficos no plano cartesiano
+# Função para limpar a entrada
+def limpar():
+    entrada.delete(0, END)
 
-## Como Usar
+# Função para plotar gráficos
+def plotar_grafico():
+    try:
+        x = np.linspace(-10, 10, 400)
+        y = eval(entrada.get())
+        plt.plot(x, y)
+        plt.xlabel('x')
+        plt.ylabel('y')
+        plt.title('Gráfico')
+        plt.grid(True)
+        plt.show()
+    except Exception as e:
+        entrada.delete(0, END)
+        entrada.insert(END, "Erro")
 
-1. Insira uma expressão matemática na entrada da calculadora.
-2. Clique no botão "Plotar" para gerar o gráfico no plano cartesiano.
+# Configuração da janela principal
+janela = Tk()
+janela.title("Calculadora Científica")
 
-## Requisitos
+# Configuração da entrada
+entrada = Entry(janela, width=30, font=("Arial", 14))
+entrada.grid(row=0, column=0, columnspan=5)
 
-- Python 3.x
-- Bibliotecas: `numpy`, `matplotlib`
+# Botões numéricos e de operações
+botoes = [
+    '7', '8', '9', '/', 'sqrt',
+    '4', '5', '6', '*', 'log',
+    '1', '2', '3', '-', 'sin',
+    '0', '.', '=', '+', 'cos',
+    '(', ')', 'tan', 'pi', 'exp'
+]
 
-## Instalação
+linha = 1
+coluna = 0
 
-```sh
-pip install numpy matplotlib
+for botao in botoes:
+    if botao == '=':
+        Button(janela, text=botao, width=5, height=2, command=calcular).grid(row=linha, column=coluna)
+    elif botao == 'sqrt':
+        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.sqrt(')).grid(row=linha, column=coluna)
+    elif botao == 'log':
+        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.log(')).grid(row=linha, column=coluna)
+    elif botao == 'sin':
+        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.sin(')).grid(row=linha, column=coluna)
+    elif botao == 'cos':
+        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.cos(')).grid(row=linha, column=coluna)
+    elif botao == 'tan':
+        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.tan(')).grid(row=linha, column=coluna)
+    elif botao == 'pi':
+        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.pi')).grid(row=linha, column=coluna)
+    elif botao == 'exp':
+        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.exp(')).grid(row=linha, column=coluna)
+    else:
+        Button(janela, text=botao, width=5, height=2, command=lambda b=botao: inserir_valor(b)).grid(row=linha, column=coluna)
+    
+    coluna += 1
+    if coluna > 4:
+        coluna = 0
+        linha += 1
 
+# Botão de limpar
+Button(janela, text='C', width=5, height=2, command=limpar).grid(row=linha, column=coluna)
 
+# Botão de plotar gráfico
+Button(janela, text='Plotar', width=5, height=2, command=plotar_grafico).grid(row=linha, column=coluna+1)
 
-
-
-## Como Usar a Calculadora exemplos:
-
-Exemplo de Expressões
-
-np.sin(x) - Seno de x
-np.cos(x) - Cosseno de x
-np.tan(x) - Tangente de x
-x**2 - Parabola ( y = x^2 )
-np.exp(x) - Função exponencial ( e^x )
-
+janela.mainloop()
