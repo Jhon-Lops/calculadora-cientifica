@@ -1,90 +1,34 @@
-from tkinter import *
-import math
-import numpy as np
-import matplotlib.pyplot as plt
+# Calculadora Científica com Tkinter
 
-# Função para calcular a expressão
-def calcular():
-    try:
-        resultado = eval(entrada.get())
-        entrada.delete(0, END)
-        entrada.insert(END, str(resultado))
-    except Exception as e:
-        entrada.delete(0, END)
-        entrada.insert(END, "Erro")
+Este projeto é uma calculadora científica simples desenvolvida em Python usando a biblioteca Tkinter para a interface gráfica. A calculadora permite realizar operações matemáticas básicas e avançadas, além de plotar gráficos de funções matemáticas.
 
-# Função para inserir valores na entrada
-def inserir_valor(valor):
-    entrada.insert(END, valor)
+## Funcionalidades
 
-# Função para limpar a entrada
-def limpar():
-    entrada.delete(0, END)
+- **Operações Básicas**: Adição, subtração, multiplicação e divisão.
+- **Funções Matemáticas**: `sqrt`, `log`, `sin`, `cos`, `tan`, `pi`, `exp`.
+- **Plotagem de Gráficos**: Plotagem de gráficos de funções matemáticas usando Matplotlib.
+- **Limpar Entrada**: Botão para limpar a entrada.
 
-# Função para plotar gráficos
-def plotar_grafico():
-    try:
-        x = np.linspace(-10, 10, 400)
-        y = eval(entrada.get())
-        plt.plot(x, y)
-        plt.xlabel('x')
-        plt.ylabel('y')
-        plt.title('Gráfico')
-        plt.grid(True)
-        plt.show()
-    except Exception as e:
-        entrada.delete(0, END)
-        entrada.insert(END, "Erro")
+## Requisitos
 
-# Configuração da janela principal
-janela = Tk()
-janela.title("Calculadora Científica")
+- Python 3.x
+- Tkinter (geralmente incluído na instalação padrão do Python)
+- NumPy
+- Matplotlib
 
-# Configuração da entrada
-entrada = Entry(janela, width=30, font=("Arial", 14))
-entrada.grid(row=0, column=0, columnspan=5)
+## Instalação
 
-# Botões numéricos e de operações
-botoes = [
-    '7', '8', '9', '/', 'sqrt',
-    '4', '5', '6', '*', 'log',
-    '1', '2', '3', '-', 'sin',
-    '0', '.', '=', '+', 'cos',
-    '(', ')', 'tan', 'pi', 'exp'
-]
+1. Certifique-se de ter o Python 3.x instalado em seu sistema.
+2. Instale as bibliotecas necessárias usando pip:
+    ```bash
+    pip install numpy matplotlib
+    ```
 
-linha = 1
-coluna = 0
+## Uso
 
-for botao in botoes:
-    if botao == '=':
-        Button(janela, text=botao, width=5, height=2, command=calcular).grid(row=linha, column=coluna)
-    elif botao == 'sqrt':
-        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.sqrt(')).grid(row=linha, column=coluna)
-    elif botao == 'log':
-        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.log(')).grid(row=linha, column=coluna)
-    elif botao == 'sin':
-        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.sin(')).grid(row=linha, column=coluna)
-    elif botao == 'cos':
-        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.cos(')).grid(row=linha, column=coluna)
-    elif botao == 'tan':
-        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.tan(')).grid(row=linha, column=coluna)
-    elif botao == 'pi':
-        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.pi')).grid(row=linha, column=coluna)
-    elif botao == 'exp':
-        Button(janela, text=botao, width=5, height=2, command=lambda: inserir_valor('math.exp(')).grid(row=linha, column=coluna)
-    else:
-        Button(janela, text=botao, width=5, height=2, command=lambda b=botao: inserir_valor(b)).grid(row=linha, column=coluna)
-    
-    coluna += 1
-    if coluna > 4:
-        coluna = 0
-        linha += 1
-
-# Botão de limpar
-Button(janela, text='C', width=5, height=2, command=limpar).grid(row=linha, column=coluna)
-
-# Botão de plotar gráfico
-Button(janela, text='Plotar', width=5, height=2, command=plotar_grafico).grid(row=linha, column=coluna+1)
-
-janela.mainloop()
+1. Execute o script Python:
+    ```bash
+    python calculadora_cientifica.py
+    ```
+2. A interface da calculadora será exibida. Use os botões para inserir valores e operações.
+3. Para plotar um gráfico, insira a função matemática na entrada e clique no botão "Plotar".
